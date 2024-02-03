@@ -67,9 +67,15 @@ namespace LXProtocols.AvolitesWebAPI
         /// Sets the selected dimmer x fade.
         /// </summary>
         /// <param name="xFadeOn">if set to true [x fade on].</param>
-        public async Task SetSelectedDimmerxFade(bool xFadeOn)
-        {
+        public async Task SetSelectedDimmerxFade(bool xFadeOn) {
             await http.GetAsync($"titan/script/2/Programmer/Editor/Fixtures/SetSelectedDimmerxFade?xFadeOn={xFadeOn}");
+        }
+
+        /// <summary>
+        /// Clears the programmer.
+        /// </summary>
+        public async Task ClearAll() {
+            await http.GetAsync($"titan/script/2/Programmer/Editor/Clear?mask=All&presets=true&clearAllProgrammers=true&fadeTime=0");
         }
 
     }

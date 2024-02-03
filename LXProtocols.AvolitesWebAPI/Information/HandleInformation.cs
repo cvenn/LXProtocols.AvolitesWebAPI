@@ -60,5 +60,10 @@ namespace LXProtocols.AvolitesWebAPI
         /// Gets additional information specific to this handle type.
         /// </summary>
         public JsonObject[] Information { get; set; }
+
+        /// <summary>
+        /// Gets location information specific to this handle.
+        /// </summary>
+        public HandleLocationInformation HandleLocation { get; set; }
     }
 }

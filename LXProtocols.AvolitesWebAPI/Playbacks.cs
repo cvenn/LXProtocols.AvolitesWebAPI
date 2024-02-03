@@ -32,9 +32,18 @@ namespace LXProtocols.AvolitesWebAPI
         /// </summary>
         /// <param name="playbackId">The playback ID of the cue list containing the cue.</param>
         /// <returns>The playback information for the specified playback.</returns>
-        public async Task<PlaybackInformation> GetPlayback(int playbackId)
-        {
+        public async Task<PlaybackInformation> GetPlayback(int playbackId) {
             return (await http.GetFromJsonAsync<JsonInformation<PlaybackInformation>>($"titan/playback/{playbackId}")).Information;
+        }
+
+        /// <summary>
+        /// Gets information about the playbacks in a given group page.
+        /// </summary>
+        /// <param name="group">The playback group name.</param>
+        /// <param name="page">The group page offset number.</param>
+        /// <returns>Information for all playbacks in the specified group / page.</returns>
+        public async Task<IEnumerable<HandleInformation>> GetPlaybacks(string group, int page) {
+            return await http.GetFromJsonAsync<IEnumerable<HandleInformation>>($"titan/handles/{group}/{page}");
         }
 
         /// <summary>
@@ -79,9 +88,18 @@ namespace LXProtocols.AvolitesWebAPI
         /// <param name="group">The handle group the new cue is to be recorded on.</param>
         /// <param name="index">The handle ID in the group the cue is to be recorded on.</param>
         /// <param name="updateOnly">if set to true [update only].</param>
-        public async Task StoreCue(string group, int index, bool updateOnly = false)
-        {
-            await http.GetAsync($"titan/script/2/Playbacks/StoreCue?group={group}&index={index}&updateOnly={updateOnly}");
+        /// <returns>The TitanID of the created cue.</returns>
+        public async Task<int> StoreCue(string group, int index, bool updateOnly = false) {
+            return await http.GetFromJsonAsync<int>($"titan/script/2/Playbacks/StoreCue?group={group}&index={index}&updateOnly={updateOnly}");
+        }
+
+        /// <summary>
+        /// Replaces an existing cue on a playback. The replacement cue is created using the information in the programmer and the current record mode.
+        /// </summary>
+        /// <param name="handle">The handle ID of the cue that is to be replaced.</param>
+        /// <param name="updateOnly">if set to true [update only].</param>
+        public async Task ReplaceCue(int handle, bool updateOnly = false) {
+            await http.GetAsync($"titan/script/2/Playbacks/ReplacePlaybackCue?handle_titanId={handle}&updateOnly={updateOnly}");
         }
     }
 }
