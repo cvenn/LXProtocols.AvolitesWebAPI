@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -56,5 +57,12 @@ namespace LXProtocols.AvolitesWebAPI
             await http.GetAsync($"titan/script/2/Selection/Context/Programmer/Clear");
         }
 
+        /// <summary>
+        /// Gets selected fixture ids
+        /// </summary>
+        /// <returns>The titan ids of all selected fixtures</returns>
+        public async Task<IEnumerable<int>> GetSelectedFixtureIds() {
+            return await http.GetFromJsonAsync<IEnumerable<int>>($"titan/script/2/Selection/Context/Global/GetSelectedFixtureIds");
+        }
     }
 }

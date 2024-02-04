@@ -75,7 +75,7 @@ namespace LXProtocols.AvolitesWebAPI
         /// Clears the programmer.
         /// </summary>
         public async Task ClearAll() {
-            await http.GetAsync($"titan/script/2/Programmer/Editor/Clear?mask=All&presets=true&clearAllProgrammers=true&fadeTime=0");
+            await http.GetAsync($"titan/script/2/Programmer/Editor/ClearAll?presets=true&allProgrammers=true");
         }
 
     }
